@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Project</title>
+    <title>Responsive Navbar</title>
     <style>
         html {
             font-size: 16px;
@@ -18,26 +18,20 @@
 
         .top-bar {
             background: #959595;
-            color: rgb(0, 0, 0);
+            color: black;
             text-align: center;
-            padding: 0.5em;
             font-size: 1em;
+            width: 100%;
+            transition: transform 0.3s;
         }
 
         .navbar {
             background: #1f5153;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             position: sticky;
             top: 0;
             z-index: 1000;
-        }
-
-        .menu-toggle {
-    display: none;
-    cursor: pointer;
-    padding: 0.5em;
-    font-size: 1.5em;
         }
 
         .nav-list {
@@ -45,181 +39,111 @@
             list-style: none;
             margin: 0;
             padding: 0;
+            line-height: 2.4em;
             gap: 2em;
         }
 
-        .nav-list li {
+        .nav-item {
             position: relative;
         }
 
-        .nav-list a {
+        .nav-item a {
             text-decoration: none;
             color: white;
+            padding: 0.5em 1em;
             font-size: 1.2em;
-            line-height: 2.4em;
-            transition: color 0.3s;
+            display: block;
+            transition: background 0.3s, color 0.3s;
         }
 
-        .nav-list a:hover {
+        .nav-item a:hover {
+            background: #555;
             color: #0091ff;
-            background-color: #555;
         }
 
-        .dropdown {
+        .dropdown-container {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
             position: absolute;
             left: 0;
             top: 100%;
             background: #445f59;
-            display: none;
-            flex-direction: column;
+            border-radius:0px 0 8px 8px;
+            list-style: none;
             min-width: 10em;
             padding: 0.5em 0;
-              /*   چیکار کنم از دقیقا زیر منو شزوع بشه/*/
- 
-
+            flex-direction: column;
         }
 
-        .dropdown a {
-            padding: 0.5em 1em;
-            display: block;
+        .dropdown-item {
             font-size: 1em;
         }
 
-        .dropdown a:hover {
+        .dropdown-item a {
+            display: block;
+            color: white;
+            text-decoration: none;
+        }
+
+        .dropdown-item a:hover {
             background: #555;
         }
-     /* کلا بخش dropdown  رو از chat gpt  گرفتم */
 
-        .has-dropdown:hover .dropdown {
+        .dropdown-container:hover .dropdown-menu {
             display: flex;
         }
 
-        .hide-top {
-            transform: translateY(-100%);
-            transition: transform 0.3s;
-        }
-
-       /* Media queries */
-       @media screen and (max-width: 768px) {
-            .menu-toggle {
-                display: block;
+        @media screen and (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                font-size: 1rem;
             }
 
             .nav-list {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: #1f5153;
                 flex-direction: column;
-                padding: 1em;
+                align-items: left;
                 gap: 1em;
-            }
-
-            .nav-list.active {
-                display: flex;
-            }
-
-            .nav-list li {
                 width: 100%;
             }
 
-            .dropdown {
-                position: static;
+            .dropdown-container {
                 width: 100%;
-                margin-top: 0.5em;
-                padding-left: 1em;
-                display: none;
+                text-align: left;
             }
 
-            .has-dropdown:hover .dropdown {
-                display: none;
-            }
-
-            .has-dropdown.active .dropdown {
-                display: flex;
-            }
-
-            .top-bar {
-                font-size: 0.9em;
-                padding: 0.3em;
+            .dropdown-menu {
+                position: relative;
+                width: 100%;
+                margin-top: 0;
             }
         }
-
-        @media screen and (max-width: 480px) {
-            .nav-list a {
-                font-size: 1rem;
-            }
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="top-bar" id="topBar">
+    <div class="top-bar">
         Kourosh is a Donkey!
     </div>
 
     <nav class="navbar">
-        <div class="menu-toggle">
-            ☰
-        </div>
         <ul class="nav-list">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li class="has-dropdown">
+            <li class="nav-item"><a href="#">Home</a></li>
+            <li class="nav-item"><a href="#">About</a></li>
+            <li class="nav-item"><a href="#">Services</a></li>
+            <li class="nav-item dropdown-container">
                 <a href="#">More ▾</a>
-                <div class="dropdown">
-                    <a href="#">Option 1</a>
-                    <a href="#">Option 2</a>
-                    <a href="#">Option 3</a>
-                </div>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a href="#">Option 1</a></li>
+                    <li class="dropdown-item"><a href="#">Option 2</a></li>
+                    <li class="dropdown-item"><a href="#">Option 3</a></li>
+                </ul>
             </li>
         </ul>
     </nav>
 
-    <script>   /* کلا بخش چاوااسکریپت  رو از chat gpt  گرفتم */
-        // Top bar hide on scroll
-        let lastScrollY = window.scrollY;
-        const topBar = document.getElementById("topBar");
-
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > lastScrollY) {
-                topBar.classList.add("hide-top");
-            } else {
-                topBar.classList.remove("hide-top");
-            }
-            lastScrollY = window.scrollY;
-        });
-
-        // Mobile menu toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navList = document.querySelector('.nav-list');
-        const dropdownItems = document.querySelectorAll('.has-dropdown');
-
-        menuToggle.addEventListener('click', () => {
-            navList.classList.toggle('active');
-        });
-
-        // Handle dropdown on mobile
-        dropdownItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    item.classList.toggle('active');
-                }
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!navList.contains(e.target) && !menuToggle.contains(e.target)) {
-                navList.classList.remove('active');
-            }
-        });
-    </script>
 </body>
 </html>
-
